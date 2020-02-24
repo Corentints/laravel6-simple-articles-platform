@@ -20,7 +20,9 @@ class CreateArticlesTable extends Migration
             $table->string('slug');
             $table->string('summary');
             $table->text('content');
+            $table->boolean('published')->default(false);
             $table->timestamps();
+            $table->dateTime('published_at')->nullable();
 
             $table->foreign('author_id')
                     ->references('id')->on('users')
