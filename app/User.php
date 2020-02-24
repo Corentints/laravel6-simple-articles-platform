@@ -40,4 +40,9 @@ class User extends Authenticatable
     public function admin() {
         return $this->is_admin;
     }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'author_id')->latest('updated_at');
+    }
 }
