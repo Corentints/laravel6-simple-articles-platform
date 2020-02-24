@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('articles', 'ArticlesController');
+/** Backend routes */
+Route::resource('admin/articles', 'Admin\ArticlesController');
 
-Route::get('/home', 'HomeController@index')->name('home');
+/** User routes */
+Route::resource('articles', 'ArticlesController');
