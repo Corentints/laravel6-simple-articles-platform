@@ -12,4 +12,12 @@ class Article extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Return the article path
+     */
+    public function path()
+    {
+        return '/articles/' . $this->id;
+    }
 }
