@@ -48,9 +48,9 @@ class ArticlesTest extends TestCase
     }
 
     /*
- * Try to get and post every backend articles pages (/admin/articles/xxx)
- */
-    private function testAllBackendArticlesPages()
+     * Try to get and post every backend articles pages (/admin/articles/xxx)
+     */
+    private function tryAllBackendArticlesPages()
     {
         $article = factory('App\Article')->create();
 
