@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Article;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreArticle;
 
 class ArticlesController extends Controller
 {
@@ -37,13 +38,13 @@ class ArticlesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Request\StoreArticle  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreArticle $request)
     {
-        $article = auth()->user()->articles()->create($request->all());
-        return redirect('/articles');
+        $article = auth()->user()->articles()->create($request->validated());
+        return redirect('/admin/articles');
     }
 
     /**

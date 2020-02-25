@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class StoreArticle extends FormRequest
 {
@@ -24,13 +25,14 @@ class StoreArticle extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'slug' => Str::slug($this->title)
+            'slug' => Str::slug($this->slug ?? $this->title) // If the slug isn't set, we take the title
         ]);
-
-       /* $this->merge([
-            'published' => $this->published ? 1 : 0,
-            'published_at' => $this->published ? new \DateTime() : null
-        ]); */
+        
+        if ($this->published === 1) {
+            $this->merge([
+                'published_at' => new \DateTime()
+            ]);
+        }
     }
 
     /**
@@ -45,6 +47,7 @@ class StoreArticle extends FormRequest
             'slug' => 'unique:articles',
             'summary' => 'required',
             'content' => 'required',
+            'published_at' => 'date'
         ];
     }
 }
