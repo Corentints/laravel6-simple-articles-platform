@@ -37,14 +37,14 @@ class ArticlesTest extends TestCase
     /** @test */
     public function guests_cannot_manage_articles()
     {
-        $this->testAllBackendArticlesPages();
+        $this->tryAllBackendArticlesPages();
     }
 
     /** @test */
     public function an_authenticated_user_cannot_manage_articles()
     {
         $this->actingAs(factory('App\User')->create());
-        $this->testAllBackendArticlesPages();
+        $this->tryAllBackendArticlesPages();
     }
 
     /*
