@@ -41,8 +41,8 @@
         </div>
 
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="1" id="published">
-            <label class="form-check-label" name="published">
+            <input class="form-check-input" type="checkbox" value="1" name="published" id="published">
+            <label class="form-check-label" for="published">
                 Publish the article
             </label>
         </div>
