@@ -33,4 +33,33 @@ class ArticlesTest extends TestCase
         $article = Article::where($articleAttributes)->first();
         $this->assertDatabaseHas('articles', $articleAttributes);
     }
+
+    /** @test */
+    public function guests_cannot_manage_articles()
+    {
+        $this->testAllBackendArticlesPages();
+    }
+
+    /** @test */
+    public function an_authenticated_user_cannot_manage_articles()
+    {
+        $this->actingAs(factory('App\User')->create());
+        $this->testAllBackendArticlesPages();
+    }
+
+    /*
+ * Try to get and post every backend articles pages (/admin/articles/xxx)
+ */
+    private function testAllBackendArticlesPages()
+    {
+        $article = factory('App\Article')->create();
+
+        // Try to post an article with the same attributes than $articles (faster)
+        $this->post('/admin/articles/', $article->toArray())->assertRedirect('login');
+
+        $this->get('/admin' . $article->path() . '/edit')->assertRedirect('login');
+        $this->get('/admin/articles')->assertRedirect('login');
+        $this->get('/admin/articles')->assertRedirect('login');
+        $this->get('/admin/articles/create')->assertRedirect('login');
+    }
 }
