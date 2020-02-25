@@ -17,7 +17,7 @@ class ArticlesTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $this->actingAsAdmin();
-        $this->get('/articles/create')->assertStatus(200);
+        $this->get('/admin/articles/create')->assertStatus(200);
 
         $title = $this->faker->sentence;
         $articleAttributes = [
@@ -27,11 +27,10 @@ class ArticlesTest extends TestCase
             'content' => $this->faker->text,
         ];
 
-        $response = $this->post('/articles', $articleAttributes);
-        $response->assertRedirect('/articles');
+        $response = $this->post('/admin/articles', $articleAttributes);
+        $response->assertRedirect('/admin/articles');
 
         $article = Article::where($articleAttributes)->first();
         $this->assertDatabaseHas('articles', $articleAttributes);
-
     }
 }
