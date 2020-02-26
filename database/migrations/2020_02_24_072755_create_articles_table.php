@@ -17,7 +17,7 @@ class CreateArticlesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('author_id');
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('summary');
             $table->text('content');
             $table->boolean('published')->default(false);
