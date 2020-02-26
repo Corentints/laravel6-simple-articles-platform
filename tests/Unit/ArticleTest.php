@@ -16,4 +16,19 @@ class ArticleTest extends TestCase
         $article = factory('App\Article')->create();
         $this->assertEquals($article->slug, Str::slug($article->slug));
     }
+
+    /** @test */
+    public function it_has_a_path() 
+    {
+        $article = factory('App\Article')->create();
+        $this->assertEquals('/articles/' . $article->id, $article->path());
+    }
+
+    /** @test */
+    public function it_belongs_to_an_admin()
+    {
+        $article = factory('App\Article')->create();
+        $this->assertInstanceOf('App\User', $article->author);
+        $this->assertEquals($article->author->is_admin, true);
+    }
 }
