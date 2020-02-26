@@ -44,10 +44,10 @@ class StoreArticle extends FormRequest
     {
         return [
             'title' => 'required',
-            'slug' => 'unique:articles',
             'summary' => 'required',
             'content' => 'required',
-            'published_at' => 'date'
+            'published_at' => 'date',
+            'slug' => 'unique:articles,slug,' . (optional($this->article)->id) ?: 'NULL'
         ];
     }
 }
