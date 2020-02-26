@@ -52,6 +52,16 @@ class ArticlesTest extends TestCase
     }
 
     /** @test */
+    public function an_admin_can_delete_an_article()
+    {
+        $article = factory('App\Article')->create();
+        $this->actingAs($article->author)
+                ->delete('/admin' . $article->path())
+                ->assertRedirect('/admin/articles')
+                ->assertDatabaseMissing('articles', $article);
+    }
+
+    /** @test */
     public function guests_cannot_manage_articles()
     {
         $this->tryAllBackendArticlesPages();
