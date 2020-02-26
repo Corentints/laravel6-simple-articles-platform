@@ -6,6 +6,7 @@ use App\Article;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreArticle;
+use Illuminate\Routing\Redirector;
 
 class ArticlesController extends Controller
 {
@@ -44,7 +45,7 @@ class ArticlesController extends Controller
     public function store(StoreArticle $request)
     {
         $article = auth()->user()->articles()->create($request->validated());
-        return redirect('/admin/articles');
+        return $article->published ? redirect($article->path()) : redirect('/admin/articles');
     }
 
     /**
@@ -66,19 +67,19 @@ class ArticlesController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('admin.articles.edit', compact('article'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
+     * Update an article
+     * @param StoreArticle $request
+     * @param Article $article
+     * @return Redirector
      */
-    public function update(Request $request, Article $article)
+    public function update(StoreArticle $request, Article $article)
     {
-        //
+        $article->update($request->validated());
+        return $article->published ? redirect($article->path()) : redirect('/admin/articles');
     }
 
     /**
