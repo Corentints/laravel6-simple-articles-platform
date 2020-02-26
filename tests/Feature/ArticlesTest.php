@@ -9,7 +9,6 @@ use Illuminate\Support\Str;
 
 class ArticlesTest extends TestCase
 {
-
     use RefreshDatabase, WithFaker;
 
     /** @test **/
@@ -32,6 +31,24 @@ class ArticlesTest extends TestCase
 
         $article = Article::where($articleAttributes)->first();
         $this->assertDatabaseHas('articles', $articleAttributes);
+    }
+
+    /** @test */
+    public function an_admin_can_update_an_article()
+    {
+        $article = factory('App\Article')->create();
+        $articleAttributes = [
+          'title' => 'Updated title!',
+          'summary' => 'Updated summary!',
+          'slug' => 'updated-my-article',
+          'content' => 'My article is updated!',
+        ];
+        $this->actingAs($article->author)
+            ->patch('/admin' . $article->path(), $articleAttributes)
+            ->assertRedirect($article->published ? $article->path() : '/admin/articles');
+        $this->assertDatabaseHas('articles', $articleAttributes);
+
+        $this->get('/admin' . $article->path() . '/edit')->assertStatus(200);
     }
 
     /** @test */
