@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Article;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreArticle;
 use Illuminate\Routing\Redirector;
 
@@ -23,7 +22,8 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        //
+        $articles = Article::paginate(12);
+        return view('admin.articles.index', compact('articles'));
     }
 
     /**
@@ -48,16 +48,6 @@ class ArticlesController extends Controller
         return $article->published ? redirect($article->path()) : redirect('/admin/articles');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Article $article)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -90,7 +80,8 @@ class ArticlesController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $article->delete();
+        return redirect('/admin/articles');
     }
 
 }

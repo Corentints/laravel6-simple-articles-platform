@@ -18,7 +18,12 @@ Route::get('/', function () {
 });
 
 /** Backend routes */
-Route::resource('admin/articles', 'Admin\ArticlesController');
+Route::prefix('admin')->group(function() {
+    Route::get('articles', 'Admin\ArticlesController@index');
+    Route::get('articles/create', 'Admin\ArticlesController@create');
+    Route::get('articles/{article}', 'Admin\ArticlesController@edit');
+    Route::delete('articles/{article}', 'Admin\ArticlesController@destroy');
+});
 
 /** User routes */
 Route::resource('articles', 'ArticlesController');
