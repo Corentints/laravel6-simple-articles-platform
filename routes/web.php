@@ -26,4 +26,4 @@ Route::prefix('admin')->group(function() {
 });
 
 /** User routes */
-Route::resource('articles', 'ArticlesController');
+Route::get('/articles/{slug}', 'ArticlesController@show');
