@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
@@ -18,6 +19,16 @@ class Article extends Model
      */
     public function path()
     {
-        return '/articles/' . $this->id;
+        return '/articles/' . $this->slug;
+    }
+
+
+    /**
+     * Return published_at readable for humans
+     * Timezone is based on config/app.php
+     */
+    public function published_at()
+    {
+        return Carbon::parse($this->published_at)->diffForHumans(null, true);
     }
 }
