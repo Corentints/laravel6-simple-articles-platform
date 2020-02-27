@@ -27,10 +27,11 @@ class StoreArticle extends FormRequest
         $this->merge([
             'slug' => Str::slug($this->slug ?? $this->title) // If the slug isn't set, we take the title
         ]);
-        
-        if ($this->published === 1) {
+
+        if ($this->published) {
             $this->merge([
-                'published_at' => new \DateTime()
+                'published_at' => new \DateTime(),
+                'published' => 1
             ]);
         }
     }
@@ -47,6 +48,7 @@ class StoreArticle extends FormRequest
             'summary' => 'required',
             'content' => 'required',
             'published_at' => 'date',
+            'published' => 'sometimes',
             'slug' => 'unique:articles,slug,' . (optional($this->article)->id) ?: 'NULL'
         ];
     }
