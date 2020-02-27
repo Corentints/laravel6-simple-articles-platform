@@ -24,11 +24,11 @@
             <td>{{ $article->author->name }}</td>
             <td>
                 <div style="display: flex;">
-                <a href="/admin{{ $article->path() }}" class="btn btn-light mr-3">Edit article</a>
+                <a href="/admin{{ $article->path() }}/edit" class="btn btn-light mr-3">Edit article</a>
                 <form action="/admin{{ $article->path() }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete article</a>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are your sure?')">Delete article</button>
                 </form>
                 </div>
             </td>

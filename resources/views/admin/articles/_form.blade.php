@@ -34,7 +34,7 @@
 </div>
 
 <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="1" name="published" id="published" @if($article->published) checked @endif>
+    <input class="form-check-input" type="checkbox" name="published[]" value="1" id="published" @if($article->published) checked @endif>
     <label class="form-check-label" for="published">
         Publish the article
     </label>
