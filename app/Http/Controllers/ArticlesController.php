@@ -14,7 +14,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        return view('articles.index', ['articles' => Article::paginate(12)]);
+        return view('articles.index', ['articles' => Article::where('published', 1)->paginate(12)]);
     }
 
     /**
@@ -25,6 +25,6 @@ class ArticlesController extends Controller
      */
     public function show(Article $article)
     {
-        return $article->content;
+        return view('articles.show', compact('article'));
     }
 }
