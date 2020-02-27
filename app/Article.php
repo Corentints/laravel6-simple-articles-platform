@@ -9,9 +9,10 @@ class Article extends Model
 {
     protected $guarded = [];
 
-    public function author()
+
+    public function getRouteKeyName()
     {
-        return $this->belongsTo(User::class);
+        return 'slug';
     }
 
     /**
@@ -22,7 +23,6 @@ class Article extends Model
         return '/articles/' . $this->slug;
     }
 
-
     /**
      * Return published_at readable for humans
      * Timezone is based on config/app.php
@@ -30,5 +30,15 @@ class Article extends Model
     public function published_at()
     {
         return Carbon::parse($this->published_at)->diffForHumans(null, true);
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
     }
 }
