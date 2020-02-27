@@ -48,7 +48,7 @@ class ArticlesTest extends TestCase
             ->assertRedirect($article->published ? $article->path() : '/admin/articles');
         $this->assertDatabaseHas('articles', $articleAttributes);
 
-        $this->get('/admin' . $article->path() . '/edit')->assertStatus(200);
+        $this->get('/admin/articles/' . $articleAttributes['slug'] . '/edit')->assertStatus(200);
     }
 
     /** @test */
@@ -57,15 +57,10 @@ class ArticlesTest extends TestCase
         $article = factory('App\Article')->create();
         $this->actingAs($article->author)
                 ->delete('/admin' . $article->path())
-                ->assertRedirect('/admin/articles')
-                ->assertDatabaseMissing('articles', $article);
+                ->assertRedirect('/admin/articles');
+        $this->assertDatabaseMissing('articles', ['id' => $article->id]);
     }
 
-    /** @test */
-    public function guests_cannot_manage_articles()
-    {
-        $this->tryAllBackendArticlesPages();
-    }
 
     /** @test */
     public function an_authenticated_user_cannot_manage_articles()
@@ -75,9 +70,18 @@ class ArticlesTest extends TestCase
     }
 
     /*
+     * TODO
+     */
+    /** @test */
+    /*public function only_published_articles_appear_on_index()
+    {
+
+    }*/
+
+    /*
      * Try to get and post every backend articles pages (/admin/articles/xxx)
      */
-    private function tryAllBackendArticlesPages()
+    public function tryAllBackendArticlesPages()
     {
         $article = factory('App\Article')->create();
 
@@ -89,4 +93,6 @@ class ArticlesTest extends TestCase
         $this->get('/admin/articles')->assertRedirect('login');
         $this->get('/admin/articles/create')->assertRedirect('login');
     }
+
+
 }
