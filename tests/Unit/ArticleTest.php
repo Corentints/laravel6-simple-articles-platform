@@ -11,17 +11,17 @@ class ArticleTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_has_a_slug() 
-    {   
+    public function it_has_a_slug()
+    {
         $article = factory('App\Article')->create();
         $this->assertEquals($article->slug, Str::slug($article->slug));
     }
 
     /** @test */
-    public function it_has_a_path() 
+    public function it_has_a_path()
     {
         $article = factory('App\Article')->create();
-        $this->assertEquals('/articles/' . $article->id, $article->path());
+        $this->assertEquals('/articles/' . $article->slug, $article->path());
     }
 
     /** @test */
