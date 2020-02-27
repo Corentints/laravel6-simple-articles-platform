@@ -17,13 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/** Backend routes */
-Route::prefix('admin')->group(function() {
-    Route::get('articles', 'Admin\ArticlesController@index');
-    Route::get('articles/create', 'Admin\ArticlesController@create');
-    Route::get('articles/{article}', 'Admin\ArticlesController@edit');
-    Route::delete('articles/{article}', 'Admin\ArticlesController@destroy');
-});
 
+Route::resource('admin/articles', 'Admin\ArticlesController');
+Route::resource('admin/categories', 'Admin\CategoriesController');
+Route::resource('admin', 'Admin\AdminController');
 /** User routes */
-Route::get('/articles/{slug}', 'ArticlesController@show');
+Route::get('/articles/', 'ArticlesController@index');
+Route::get('/articles/{article}', 'ArticlesController@show');
+
