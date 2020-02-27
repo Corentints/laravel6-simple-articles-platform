@@ -45,9 +45,8 @@ class ArticlesController extends Controller
     public function store(StoreArticle $request)
     {
         $article = auth()->user()->articles()->create($request->validated());
-        return $article->published ? redirect($article->path()) : redirect('/admin/articles');
+        return ($article->published ? redirect($article->path()) : redirect('/admin/articles'))->with('status', 'Article created!');;
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -69,7 +68,7 @@ class ArticlesController extends Controller
     public function update(StoreArticle $request, Article $article)
     {
         $article->update($request->validated());
-        return $article->published ? redirect($article->path()) : redirect('/admin/articles');
+        return ($article->published ? redirect($article->path()) : redirect('/admin/articles'))->with('status', 'Article edited!');;
     }
 
     /**
@@ -81,7 +80,7 @@ class ArticlesController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
-        return redirect('/admin/articles');
+        return redirect('/admin/articles')->with('status', 'Article deleted!');;
     }
 
 }
