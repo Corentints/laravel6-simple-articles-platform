@@ -73,6 +73,11 @@
         </nav>
 
         <main class="container mt-5 pt-3 bg-white">
+            @if(session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
             @yield('content')
         </main>
     </div>
