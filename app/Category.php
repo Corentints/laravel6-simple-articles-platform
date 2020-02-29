@@ -11,16 +11,16 @@ class Category extends Model
 
     public function getRouteKeyName()
     {
-        return 'name';
+        return 'slug';
     }
 
     public function path()
     {
-        return '/categories/' . $this->name;
+        return '/categories/' . $this->slug;
     }
 
     public function articles()
     {
-
+        return $this->belongsToMany(Article::class);
     }
 }
