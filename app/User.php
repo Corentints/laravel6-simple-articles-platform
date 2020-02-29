@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Article::class, 'author_id')->latest('updated_at');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id')->latest('updated_at');
+    }
 }
