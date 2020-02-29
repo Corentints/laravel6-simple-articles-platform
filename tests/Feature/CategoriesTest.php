@@ -21,7 +21,7 @@ class CategoriesTest extends TestCase
         $response = $this->post('/admin/categories', $categoryName);
         $category = Category::where($categoryName)->first();
 
-        $response->assertRedirect('admin' . $category->path());
+        $response->assertRedirect('admin/categories');
         $this->assertDatabaseHas('categories', $categoryName);
     }
 
@@ -33,6 +33,15 @@ class CategoriesTest extends TestCase
             ->patch('admin' . $category->path(), $categoryName = ['name' => 'category\'s name changed!']);
 
         $this->assertDatabaseHas('categories', $categoryName);
+    }
 
+    /** @test */
+    public function an_admin_can_delete_a_category()
+    {
+        $category = factory('App\Category')->create();
+        $this->actingAs(factory('App\User')->create(['is_admin' => 1]))
+            ->delete('/admin' . $category->path())
+            ->assertRedirect('/admin/categories');
+        $this->assertDatabaseMissing('articles', ['id' => $category->id]);
     }
 }
