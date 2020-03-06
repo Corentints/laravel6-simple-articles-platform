@@ -13,13 +13,11 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index');
-
 Route::resource('admin/articles', 'Admin\ArticlesController');
 Route::resource('admin/categories', 'Admin\CategoriesController');
 Route::resource('admin', 'Admin\AdminController');
 /** User routes */
-Route::get('/articles/', 'ArticlesController@index');
+Route::get('/', 'ArticlesController@index');
 Route::get('/articles/{article}', 'ArticlesController@show');
 
 Route::post('/articles/{article}/comments', 'CommentsController@store');
