@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Category;
 use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
@@ -14,7 +15,11 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        return view('articles.index', ['articles' => Article::where('published', 1)->paginate(12)]);
+        return view('articles.index', [
+            'articles' => Article::where('published', 1)->paginate(12),
+            'categories' => Category::latest()->take(12)->get()
+
+        ]);
     }
 
     /**
