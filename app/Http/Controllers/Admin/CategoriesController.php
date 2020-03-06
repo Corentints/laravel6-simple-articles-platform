@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategory;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -17,7 +18,7 @@ class CategoriesController extends Controller
 
     public function index()
     {
-        return view('admin.categories.index', ['categories' => Category::all()]);
+        return view('admin.categories.index', ['categories' => Category::all()->sortByDesc('created_at')]);
     }
 
     public function create()
@@ -25,12 +26,10 @@ class CategoriesController extends Controller
         return view('admin.categories.create');
     }
 
-    public function store()
+    public function store(StoreCategory $request)
     {
-        $category = Category::create(request()->validate([
-            'name' => 'required|unique:categories'
-        ]));
-        return redirect('admin' . $category->path())->with('status', 'Category created!');;
+        $category = Category::create($request->validated());
+        return redirect('admin/categories')->with('status', 'Category created!');;
     }
 
     public function edit(Category $category)
@@ -38,10 +37,10 @@ class CategoriesController extends Controller
         return view('admin.categories.edit', compact('category'));
     }
 
-    public function update(Category $category)
+    public function update(StoreCategory $request, Category $category)
     {
         $category->update([
-            'name' => request('name')
+            'name' => $request->validated()
         ]);
         return redirect('/admin/categories')->with('status', 'Category updated!');
     }
