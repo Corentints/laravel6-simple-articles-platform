@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <h1>Categories</h1>
+    <a href="/admin/categories/create">Create a category</a>
 
     <table class="table table-bordered mt-3">
         <thead>
