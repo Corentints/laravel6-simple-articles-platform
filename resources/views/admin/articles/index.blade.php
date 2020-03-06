@@ -21,6 +21,11 @@
             <td>{{ $article->title }}</td>
             <td>{{ $article->slug }}</td>
             <td>{{ $article->summary }}</td>
+            @forelse($article->categories as $category)
+
+                @empty
+            <td>/</td>
+            @endforelse
             <td>{{ $article->author->name }}</td>
             <td>
                 <div style="display: flex;">
