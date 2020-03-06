@@ -33,9 +33,9 @@ class CommentsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comment  $comment
-     * @return Response
+     * @param Article $article
+     * @param \App\Comment $comment
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Article $article, Comment $comment)
     {
@@ -43,7 +43,7 @@ class CommentsController extends Controller
             'content' => request('content')
         ]);
 
-        return redirect($article->path());
+        return redirect($article->path() . "#success")->with('comment', 'Your comment has been updated!');
     }
 
     /**
