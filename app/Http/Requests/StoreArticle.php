@@ -33,6 +33,10 @@ class StoreArticle extends FormRequest
                 'published_at' => new \DateTime(),
                 'published' => 1
             ]);
+        } else {
+            $this->merge([
+               'published' => 0,
+            ]);
         }
     }
 
